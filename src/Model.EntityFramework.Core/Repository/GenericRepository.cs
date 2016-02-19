@@ -9,21 +9,21 @@ namespace Pally.Model.EntityFramework.Core.Repository
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IEntity
     {
-        private readonly DbSet<TEntity> _dbSet; 
+        protected readonly DbSet<TEntity> DbSet; 
 
         public GenericRepository(IDbContext dbContext)
         {
-            _dbSet = dbContext.Set<TEntity>();
+            DbSet = dbContext.Set<TEntity>();
         }
 
         public virtual TEntity GetById(int id)
         {
-            return _dbSet.Find(id);
+            return DbSet.Find(id);
         }
 
         public virtual async Task<TEntity> GetByIdAsync(int id)
         {
-            return await _dbSet.FindAsync(id);
+            return await DbSet.FindAsync(id);
         }
 
         public IList<TEntity> GetByIds(IList<int> ids)
@@ -31,7 +31,7 @@ namespace Pally.Model.EntityFramework.Core.Repository
             if (ids == null || !ids.Any())
                 return Enumerable.Empty<TEntity>().ToList();
 
-            return _dbSet.Where(x => ids.Contains(x.Id)).ToList();
+            return DbSet.Where(x => ids.Contains(x.Id)).ToList();
         }
 
         public async Task<IList<TEntity>> GetByIdsAsync(IList<int> ids)
@@ -39,7 +39,7 @@ namespace Pally.Model.EntityFramework.Core.Repository
             if (ids == null || !ids.Any())
                 return Enumerable.Empty<TEntity>().ToList();
 
-            return await _dbSet.Where(x => ids.Contains(x.Id)).ToListAsync();
+            return await DbSet.Where(x => ids.Contains(x.Id)).ToListAsync();
         }
 
         public virtual void Insert(TEntity entity)
@@ -47,7 +47,7 @@ namespace Pally.Model.EntityFramework.Core.Repository
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity), "Entity cannot be null!");
 
-            _dbSet.Add(entity);
+            DbSet.Add(entity);
         }
 
         public virtual void Delete(int id, bool force = false)
@@ -67,7 +67,7 @@ namespace Pally.Model.EntityFramework.Core.Repository
             var deletableEntity = entity as ILightDeletableEntity;
             if (deletableEntity == null || force)
             {
-                _dbSet.Remove(entity);
+                DbSet.Remove(entity);
             }
             else
             {
