@@ -55,6 +55,8 @@
     <Compile Include="Entity\IEntity.cs" />
     <Compile Include="Entity\ILightDeletableEntity.cs" />
     <Compile Include="Entity\IRecordBaseEntity.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Helpers\ParameterRebinder.cs" />
     <Compile Include="IDbContext.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
