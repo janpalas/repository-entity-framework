@@ -50,7 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseDbContext.cs" />
+    <Compile Include="DbContextBase.cs" />
     <Compile Include="Entity\IConcurrentEntity.cs" />
     <Compile Include="Entity\IEntity.cs" />
     <Compile Include="Entity\ILightDeletableEntity.cs" />

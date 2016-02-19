@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Pally.Model.EntityFramework.Core.Entity;
 
@@ -21,9 +22,31 @@ namespace Pally.Model.EntityFramework.Core.Repository
             return DbSet.Find(id);
         }
 
+        public TEntity GetById(int id, params Expression<Func<TEntity, object>>[] includes)
+        {
+            IQueryable<TEntity> queryable = DbSet;
+            foreach (Expression<Func<TEntity, object>> include in includes)
+            {
+                queryable = queryable.Include(include);
+            }
+
+            return queryable.FirstOrDefault(x => x.Id == id);
+        }
+
         public virtual async Task<TEntity> GetByIdAsync(int id)
         {
             return await DbSet.FindAsync(id);
+        }
+
+        public async Task<TEntity> GetByIdAsync(int id, params Expression<Func<TEntity, object>>[] includes)
+        {
+            IQueryable<TEntity> queryable = DbSet;
+            foreach (Expression<Func<TEntity, object>> include in includes)
+            {
+                queryable = queryable.Include(include);
+            }
+
+            return await queryable.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public IList<TEntity> GetByIds(IList<int> ids)

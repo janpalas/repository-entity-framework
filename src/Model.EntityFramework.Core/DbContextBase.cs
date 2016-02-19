@@ -11,14 +11,14 @@ using Pally.Model.EntityFramework.Core.Entity;
 
 namespace Pally.Model.EntityFramework.Core
 {
-    public class BaseDbContext : DbContext, IDbContext
+    public class DbContextBase : DbContext, IDbContext
     {
-        protected BaseDbContext(string nameOrConnectionString)
+        protected DbContextBase(string nameOrConnectionString)
             :base(nameOrConnectionString)
         {
         }
 
-        protected BaseDbContext()
+        protected DbContextBase()
         {
         }
 
